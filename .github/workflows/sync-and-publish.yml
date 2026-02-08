@@ -1,0 +1,77 @@
+name: Sync Swot & Publish
+
+on:
+  schedule:
+    - cron: '0 6 * * *' # Daily at 6am UTC
+  workflow_dispatch: # Manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  sync-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Sync Swot data
+        run: pnpm sync
+
+      - name: Check for data changes
+        id: changes
+        run: |
+          if git diff --quiet packages/educhk/src/data/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No data changes detected."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Data changes detected."
+          fi
+
+      - name: Set version to today's date
+        if: steps.changes.outputs.changed == 'true'
+        working-directory: packages/educhk
+        run: |
+          YEAR=$(date +%Y)
+          MONTH=$(date +%-m)
+          DAY=$(date +%-d)
+          npm version "${YEAR}.${MONTH}.${DAY}" --no-git-tag-version
+
+      - name: Build package
+        if: steps.changes.outputs.changed == 'true'
+        run: pnpm build
+
+      - name: Publish to npm
+        if: steps.changes.outputs.changed == 'true'
+        working-directory: packages/educhk
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Deploy worker
+        if: steps.changes.outputs.changed == 'true'
+        working-directory: worker
+        run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      - name: Commit updated data
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add packages/educhk/src/data/ packages/educhk/package.json
+          git commit -m "chore: sync swot data $(date +%Y-%m-%d)"
+          git push
