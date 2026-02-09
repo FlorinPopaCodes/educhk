@@ -4,14 +4,12 @@
 	"description": "Lightweight academic domain checker for edge workers. O(1) lookups for 25k+ educational domains.",
 	"license": "MIT",
 	"type": "module",
-	"main": "dist/index.cjs",
 	"module": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
-			"import": "./dist/index.js",
-			"require": "./dist/index.cjs"
+			"import": "./dist/index.js"
 		}
 	},
 	"files": [
@@ -36,7 +34,7 @@
 		"directory": "packages/educhk"
 	},
 	"scripts": {
-		"build": "tsup src/index.ts --format esm,cjs --dts --clean --target es2022"
+		"build": "tsup src/index.ts --format esm --dts --clean --target es2022"
 	},
 	"devDependencies": {
 		"tsup": "^8.3.0",
