@@ -15,8 +15,7 @@
 		}
 	},
 	"files": [
-		"dist",
-		"src/data"
+		"dist"
 	],
 	"keywords": [
 		"academic",
@@ -33,7 +32,7 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/FlorinPopaCodes/educhk.git",
+		"url": "git+https://github.com/FlorinPopaCodes/educhk.git",
 		"directory": "packages/educhk"
 	},
 	"scripts": {
