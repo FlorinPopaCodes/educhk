@@ -1,6 +1,14 @@
 # educhk
 
-Lightweight academic domain checker for edge workers. O(1) lookups across 25,000+ educational institution domains sourced from [JetBrains Swot](https://github.com/JetBrains/swot).
+Lightweight academic domain checker for edge workers. Fast lookups across 25,000+ educational institution domains sourced from [JetBrains Swot](https://github.com/JetBrains/swot).
+
+This package wouldn't be possible without the work of the contributor of [JetBrains Swot](https://github.com/JetBrains/swot).
+
+## Demo
+
+https://educhk.florin-popa-codes.workers.dev is available for testing, side-projects or startups for a reasonable amount of records.
+
+Deploying this to your account should cost almost nothing.
 
 ## Install
 
