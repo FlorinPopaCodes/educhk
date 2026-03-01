@@ -1,6 +1,6 @@
 {
 	"name": "educhk",
-	"version": "2026.2.28",
+	"version": "2026.3.1",
 	"description": "Lightweight academic domain checker for edge workers. O(1) lookups for 25k+ educational domains.",
 	"license": "MIT",
 	"type": "module",
