@@ -22,6 +22,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: pnpm install
@@ -56,7 +57,7 @@ jobs:
       - name: Publish to npm
         if: steps.changes.outputs.changed == 'true'
         working-directory: packages/educhk
-        run: npm publish --access public --provenance
+        run: npx npm@latest publish --access public --provenance
 
       - name: Commit updated data
         if: steps.changes.outputs.changed == 'true'
