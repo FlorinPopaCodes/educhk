@@ -13,10 +13,10 @@
 		"educhk": "workspace:*"
 	},
 	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.12.4",
-		"@types/node": "^25.2.2",
-		"typescript": "^5.5.2",
-		"vitest": "~3.2.0",
-		"wrangler": "^4.63.0"
+		"@cloudflare/vitest-pool-workers": "^0.14.1",
+		"@types/node": "^25.5.2",
+		"typescript": "^6.0.2",
+		"vitest": "^4.1.2",
+		"wrangler": "^4.80.0"
 	}
 }
