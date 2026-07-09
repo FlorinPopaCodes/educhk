@@ -57,7 +57,7 @@ jobs:
       - name: Publish to npm
         if: steps.changes.outputs.changed == 'true'
         working-directory: packages/educhk
-        run: npx npm@latest publish --access public --provenance
+        run: npx npm@11 publish --access public --provenance
 
       - name: Commit updated data
         if: steps.changes.outputs.changed == 'true'
